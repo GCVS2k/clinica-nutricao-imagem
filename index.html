@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clínica Nutrição e Imagem</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cabeçalho -->
+    <header>
+        <img src="images/logo1.jpg" alt="Logo Clínica Nutrição e Imagem" class="logo">
+        <h1>Clínica Nutrição e Imagem</h1>
+        <p>O seu local referência de Brasília para exames de imagem e nutrologia!</p>
+    </header>
+
+    <!-- Seção de Serviços -->
+    <section id="servicos">
+        <h2>Nossos Serviços</h2>
+        <div class="servico">
+            <img src="images/servico1.jpg" alt="Consulta Médica">
+            <h3>Nutrologia</h3>
+            <p>Atendimento personalizado de acordo com seu objetivo para atingir seu corpo ideal!</p>
+        </div>
+        <div class="servico">
+            <img src="images/servico2.jpg" alt="Exames de Imagem">
+            <h3>Exames de Imagem</h3>
+            <p>Equipamentos modernos para exames como raio-X, ultrassom e tomografia.</p>
+        </div>
+        <div class="cta-agendamento">
+            <a href="agendamento/frontend/index.html" class="btn-agendar">Agendar Consulta/Exame</a>
+        </div>
+    </section>
+
+    <!-- Seção da Equipe -->
+    <section id="equipe">
+        <h2>Nossa Equipe</h2>
+        <div class="membro">
+            <img src="images/equipe1.jpg" alt="Dr. João Silva">
+            <h3>Dr. João Silva</h3>
+            <p>Diretor Médico Geral</p>
+        </div>
+        <div class="membro">
+            <img src="images/equipe2.jpg" alt="Dra. Maria Oliveira">
+            <h3>Dra. Maria Oliveira</h3>
+            <p>Nutróloga</p>
+        </div>
+        <div class="membro">
+            <img src="images/equipe3.jpg" alt="Dr. Pedro Santos">
+            <h3>Dr. Pedro Santos</h3>
+            <p>Radiologista</p>
+        </div>
+    </section>
+
+    <!-- Seção de Disponibilidade -->
+<section id="disponibilidade">
+    <h2>Disponibilidade dos Profissionais</h2>
+    <div class="filtros">
+        <label for="filtro-especialidade">Filtrar por Especialidade:</label>
+        <input type="text" id="filtro-especialidade" placeholder="Ex.: Nutrologia">
+        <button onclick="filtrarPorEspecialidade()">Filtrar</button>
+
+        <label for="filtro-nome">Pesquisar por Nome:</label>
+        <input type="text" id="filtro-nome" placeholder="Ex.: João">
+        <button onclick="pesquisarPorNome()">Pesquisar</button>
+
+        <button onclick="listarTodos()">Listar Todos</button>
+    </div>
+    <div id="resultados"></div>
+</section>
+
+    <!-- Formulário de Inscrição -->
+    <section id="formulario">
+        <h2>Preencha seus dados para adiantar o cadastro na clinica!</h2>
+        <form>
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" name="nome" required>
+
+            <label for="email">E-mail:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="cidade">Cidade:</label>
+            <input type="text" id="cidade" name="cidade" required>
+
+            <label for="estado">Estado:</label>
+            <input type="text" id="estado" name="estado" required>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </section>
+
+    <!-- Rodapé -->
+    <footer>
+        <p>© 2025 Clínica Nutrição e Imagem. Todos os direitos reservados.</p>
+        <p>Endereço: Asa Sul, 500 - Brasília, DF - Próximo ao McDonald's</p>
+        <p>Telefone: (61) 4002-8922</p>
+    </footer>
+    <script>
+        // Função para listar todos os profissionais
+        async function listarTodos() {
+            try {
+                const response = await fetch('http://localhost:3000/profissionais');
+                const profissionais = await response.json();
+                exibirResultados(profissionais);
+            } catch (error) {
+                console.error('Erro ao listar profissionais:', error);
+            }
+        }
+    
+        // Função para filtrar por especialidade
+        async function filtrarPorEspecialidade() {
+            const especialidade = document.getElementById('filtro-especialidade').value;
+            if (!especialidade) return alert('Digite uma especialidade');
+            try {
+                const response = await fetch(`http://localhost:3000/profissionais/especialidade/${especialidade}`);
+                const profissionais = await response.json();
+                exibirResultados(profissionais);
+            } catch (error) {
+                console.error('Erro ao filtrar por especialidade:', error);
+            }
+        }
+    
+        // Função para pesquisar por nome
+        async function pesquisarPorNome() {
+            const nome = document.getElementById('filtro-nome').value;
+            if (!nome) return alert('Digite um nome');
+            try {
+                const response = await fetch(`http://localhost:3000/profissionais/nome/${nome}`);
+                const profissionais = await response.json();
+                exibirResultados(profissionais);
+            } catch (error) {
+                console.error('Erro ao pesquisar por nome:', error);
+            }
+        }
+    
+        // Função para exibir os resultados
+        function exibirResultados(profissionais) {
+            const resultadosDiv = document.getElementById('resultados');
+            resultadosDiv.innerHTML = '';
+            if (profissionais.length === 0) {
+                resultadosDiv.innerHTML = '<p>Nenhum profissional encontrado.</p>';
+                return;
+            }
+            profissionais.forEach(prof => {
+                const div = document.createElement('div');
+                div.className = 'profissional';
+                div.innerHTML = `
+                    <h3>${prof.nome}</h3>
+                    <p><strong>Especialidade:</strong> ${prof.especialidade}</p>
+                    <p><strong>Disponibilidade:</strong> ${prof.disponibilidade.join(', ')}</p>
+                `;
+                resultadosDiv.appendChild(div);
+            });
+        }
+    
+        // Carregar todos os profissionais ao abrir a página
+        listarTodos();
+    </script>
+</body>
+</html>

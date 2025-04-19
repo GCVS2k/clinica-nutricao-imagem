@@ -1,0 +1,249 @@
+/* Estilização geral */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    line-height: 1.6;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #007bff;
+    color: white;
+    text-align: center;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+header .logo {
+    max-width: 150px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+
+header h1 {
+    font-size: 2.5rem;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin-top: 0.5rem;
+}
+
+/* Seção de Serviços */
+#servicos {
+    background-color: #f8f9fa;
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+    font-size: 2rem;
+    color: #007bff;
+}
+
+h3 {
+    margin: 0.5rem 0;
+    font-size: 1.5rem;
+}
+
+.servico {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.servico img {
+    width: 100%;
+    max-width: 300px;
+    height: auto;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+/* Seção da Equipe */
+#equipe {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.membro {
+    text-align: center;
+    margin: 1rem 0;
+    max-width: 200px;
+}
+
+.membro img {
+    width: 100%;
+    height: auto;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+}
+
+/* Formulário */
+#formulario {
+    background-color: #e9ecef;
+    padding: 2rem;
+    border-radius: 10px;
+    max-width: 600px;
+    margin: 3rem auto;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+}
+
+input {
+    padding: 0.8rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+button {
+    padding: 0.8rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Rodapé */
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #007bff;
+    color: white;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+footer a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .servico img, .membro img {
+        max-width: 200px;
+    }
+}
+
+/* Seção de Disponibilidade */
+#disponibilidade {
+    padding: 3rem 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    justify-content: center;
+}
+
+.filtros label {
+    font-weight: bold;
+}
+
+.filtros input {
+    padding: 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    max-width: 200px;
+}
+
+.filtros button {
+    padding: 0.8rem;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+
+.filtros button:hover {
+    background-color: #0056b3;
+}
+
+#resultados {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.profissional {
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-radius: 10px;
+    text-align: center;
+}
+
+/* Call to Action - Agendamento */
+.cta-agendamento {
+    text-align: center;
+    margin-top: 2rem;
+}
+
+.btn-agendar {
+    display: inline-block;
+    padding: 1rem 2rem;
+    background-color: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.btn-agendar:hover {
+    background-color: #0056b3;
+}

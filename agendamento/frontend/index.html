@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento - Clínica Nutrição e Imagem</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <header>
+            <h1>Agendamento de Consultas/Exames</h1>
+            <p>Clínica Nutrição e Imagem - Brasília, DF</p>
+            <a href="../../index.html" class="btn-retornar">Voltar para a Página Inicial</a>
+        </header>
+    </header>
+
+    <section id="agendamento">
+        <h2>Agendar Consulta/Exame</h2>
+        <form id="form-agendamento">
+            <label for="especialidade">Especialidade:</label>
+            <select id="especialidade" required>
+                <option value="">Selecione uma especialidade</option>
+            </select>
+
+            <label for="profissional">Profissional:</label>
+            <select id="profissional" required disabled>
+                <option value="">Selecione um profissional</option>
+            </select>
+
+            <label for="data">Data e Horário:</label>
+            <select id="data" required disabled>
+                <option value="">Selecione uma data</option>
+            </select>
+
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" required>
+
+            <label for="cpf">CPF:</label>
+            <input type="text" id="cpf" required>
+
+            <button type="submit">Agendar</button>
+        </form>
+    </section>
+
+    <section id="pesquisa">
+        <h2>Pesquisar Agendamentos</h2>
+        <form id="form-pesquisa">
+            <label for="cpf-pesquisa">CPF:</label>
+            <input type="text" id="cpf-pesquisa" required>
+            <button type="submit">Pesquisar</button>
+        </form>
+        <div id="resultados-pesquisa"></div>
+    </section>
+
+    <footer>
+        <p>© 2025 Clínica Nutrição e Imagem. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

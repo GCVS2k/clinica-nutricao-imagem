@@ -1,0 +1,35 @@
+[
+    {
+        "id": 1,
+        "nome": "Dr. João Silva",
+        "especialidade": "Diretor Médico Geral",
+        "disponibilidade": [
+            "2025-04-20 08:00",
+            "2025-04-20 09:00",
+            "2025-04-22 14:00",
+            "2025-04-22 15:00"
+        ]
+    },
+    {
+        "id": 2,
+        "nome": "Dra. Maria Oliveira",
+        "especialidade": "Nutrologia",
+        "disponibilidade": [
+            "2025-04-21 09:00",
+            "2025-04-21 10:00",
+            "2025-04-23 15:00",
+            "2025-04-23 16:00"
+        ]
+    },
+    {
+        "id": 3,
+        "nome": "Dr. Pedro Santos",
+        "especialidade": "Radiologia",
+        "disponibilidade": [
+            "2025-04-24 08:00",
+            "2025-04-24 09:00",
+            "2025-04-25 10:00",
+            "2025-04-25 11:00"
+        ]
+    }
+]
