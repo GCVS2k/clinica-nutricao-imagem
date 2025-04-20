@@ -1,1 +1,16 @@
-[]
+[
+  {
+    "id": 1,
+    "profissionalId": 2,
+    "data": "2025-04-21 09:00",
+    "nome": "João da Silva",
+    "cpf": "123.456.789-00"
+  },
+  {
+    "id": 2,
+    "profissionalId": 2,
+    "data": "2025-04-21 10:00",
+    "nome": "Guilherme Cally",
+    "cpf": "12345678912"
+  }
+]

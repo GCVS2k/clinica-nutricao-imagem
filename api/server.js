@@ -58,6 +58,18 @@ app.get('/profissionais/nome/:nome', async (req, res) => {
     }
 });
 
+// Endpoint para listar todas as especialidades
+app.get('/especialidades', async (req, res) => {
+    try {
+        const data = await fs.readFile(profissionaisFile, 'utf8');
+        const profissionais = JSON.parse(data);
+        const especialidades = [...new Set(profissionais.map(prof => prof.especialidade))];
+        res.json(especialidades);
+    } catch (error) {
+        res.status(500).json({ error: 'Erro ao listar especialidades' });
+    }
+});
+
 // Iniciar o servidor
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);

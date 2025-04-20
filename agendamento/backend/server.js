@@ -3,6 +3,8 @@ const fs = require('fs').promises;
 const path = require('path');
 const app = express();
 const port = 3001; // Porta diferente da API anterior
+const cors = require('cors');
+app.use(cors());
 
 // Middleware para CORS
 app.use((req, res, next) => {
@@ -71,35 +73,37 @@ app.get('/disponibilidade/:profissionalId', async (req, res) => {
 
 // Registrar um agendamento
 app.post('/agendamentos', async (req, res) => {
-    const { nome, cpf, especialidade, profissionalId, data } = req.body;
-    if (!nome || !cpf || !especialidade || !profissionalId || !data) {
-        return res.status(400).json({ error: 'Dados incompletos' });
-    }
-
+    const { profissionalId, data, nome, cpf } = req.body;
     try {
         const profData = await fs.readFile(profissionaisFile, 'utf8');
         const profissionais = JSON.parse(profData);
         const profissional = profissionais.find(p => p.id === parseInt(profissionalId));
-        if (!profissional || !profissional.disponibilidade.includes(data)) {
-            return res.status(400).json({ error: 'Data indisponível ou profissional inválido' });
+        if (!profissional) {
+            return res.status(404).json({ error: 'Profissional não encontrado' });
         }
 
         const agendData = await fs.readFile(agendamentosFile, 'utf8');
-        const agendamentos = JSON.parse(agendData);
+        let agendamentos = JSON.parse(agendData);
+        const dataJaAgendada = agendamentos.some(
+            a => a.profissionalId === parseInt(profissionalId) && a.data === data
+        );
+        if (dataJaAgendada) {
+            return res.status(400).json({ error: 'Data já agendada' });
+        }
+
         const novoAgendamento = {
-            id: agendamentos.length + 1,
-            nome,
-            cpf,
-            especialidade,
+            id: agendamentos.length > 0 ? Math.max(...agendamentos.map(a => a.id)) + 1 : 1,
             profissionalId: parseInt(profissionalId),
-            profissionalNome: profissional.nome,
-            data
+            data,
+            nome,
+            cpf
         };
         agendamentos.push(novoAgendamento);
         await fs.writeFile(agendamentosFile, JSON.stringify(agendamentos, null, 2));
-        res.json({ message: 'Agendamento registrado com sucesso', agendamento: novoAgendamento });
+        res.json({ message: 'Agendamento realizado com sucesso' });
     } catch (error) {
-        res.status(500).json({ error: 'Erro ao registrar agendamento' });
+        console.error('Erro ao realizar agendamento:', error);
+        res.status(500).json({ error: 'Erro ao realizar agendamento' });
     }
 });
 

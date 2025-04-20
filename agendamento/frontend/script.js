@@ -6,32 +6,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
 async function carregarEspecialidades() {
     try {
-        const response = await fetch('http://localhost:3001/especialidades');
-        const especialidades = await response.json();
-        const select = document.getElementById('especialidade');
-        especialidades.forEach/esp ; {
-            const option = document.createElement('option');
-            option.value = esp;
-            option.textContent = esp;
-            select.appendChild(option);
-        };
-        select.addEventListener('change', carregarProfissionais);
-    } catch (error) {
-        console.error('Erro ao carregar especialidades:', error);
-    }
-}
-
-async function carregarEspecialidades() {
-    try {
         console.log('Carregando especialidades...');
         const response = await fetch('http://localhost:3001/especialidades');
         if (!response.ok) {
-            throw new Error(`Erro HTTP: ${response.status}`);
+            throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
         }
         const especialidades = await response.json();
         console.log('Especialidades recebidas:', especialidades);
         const select = document.getElementById('especialidade');
-        select.innerHTML = '<option value="">Selecione uma especialidade</option>'; // Limpar opções
+        select.innerHTML = '<option value="">Selecione uma especialidade</option>';
         especialidades.forEach(esp => {
             const option = document.createElement('option');
             option.value = esp;
@@ -41,7 +24,7 @@ async function carregarEspecialidades() {
         select.addEventListener('change', carregarProfissionais);
     } catch (error) {
         console.error('Erro ao carregar especialidades:', error);
-        alert('Erro ao carregar especialidades. Verifique o console para detalhes.');
+        alert(`Erro ao carregar especialidades: ${error.message}`);
     }
 }
 
@@ -63,7 +46,7 @@ async function carregarProfissionais() {
         console.log(`Carregando profissionais para especialidade: ${especialidade}`);
         const response = await fetch(`http://localhost:3001/profissionais/${encodeURIComponent(especialidade)}`);
         if (!response.ok) {
-            throw new Error(`Erro HTTP: ${response.status}`);
+            throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
         }
         const profissionais = await response.json();
         console.log('Profissionais recebidos:', profissionais);
@@ -79,15 +62,14 @@ async function carregarProfissionais() {
             option.textContent = prof.nome;
             profissionalSelect.appendChild(option);
         });
-        // Remover eventos anteriores para evitar duplicação
         profissionalSelect.removeEventListener('change', carregarDisponibilidade);
         profissionalSelect.addEventListener('change', carregarDisponibilidade);
     } catch (error) {
         console.error('Erro ao carregar profissionais:', error);
-        alert('Erro ao carregar profissionais. Verifique o console para detalhes.');
+        alert(`Erro ao carregar profissionais: ${error.message}`);
     }
-    
 }
+
 async function carregarDisponibilidade() {
     const profissionalId = document.getElementById('profissional').value;
     const dataSelect = document.getElementById('data');
@@ -103,7 +85,7 @@ async function carregarDisponibilidade() {
         console.log(`Carregando disponibilidade para profissional ID: ${profissionalId}`);
         const response = await fetch(`http://localhost:3001/disponibilidade/${profissionalId}`);
         if (!response.ok) {
-            throw new Error(`Erro HTTP: ${response.status}`);
+            throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
         }
         const datas = await response.json();
         console.log('Datas recebidas:', datas);
@@ -121,40 +103,50 @@ async function carregarDisponibilidade() {
         });
     } catch (error) {
         console.error('Erro ao carregar disponibilidade:', error);
-        alert('Erro ao carregar disponibilidade. Verifique o console para detalhes.');
+        alert(`Erro ao carregar disponibilidade: ${error.message}`);
     }
 }
 
 async function agendar(event) {
     event.preventDefault();
-    const especialidade = document.getElementById('especialidade').value;
     const profissionalId = document.getElementById('profissional').value;
     const data = document.getElementById('data').value;
     const nome = document.getElementById('nome').value;
     const cpf = document.getElementById('cpf').value;
 
-    if (!especialidade || !profissionalId || !data || !nome || !cpf) {
-        alert('Preencha todos os campos');
+    if (!profissionalId || !data || !nome || !cpf) {
+        alert('Por favor, preencha todos os campos.');
         return;
     }
 
     try {
+        console.log('Enviando agendamento:', { profissionalId, data, nome, cpf });
         const response = await fetch('http://localhost:3001/agendamentos', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ nome, cpf, especialidade, profissionalId, data })
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                profissionalId: parseInt(profissionalId),
+                data,
+                nome,
+                cpf
+            })
         });
-        const result = await response.json();
-        if (response.ok) {
-            alert(result.message);
-            document.getElementById('form-agendamento').reset();
-            carregarEspecialidades();
-        } else {
-            alert(result.error);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Erro HTTP: ${response.status} - ${errorData.error || 'Erro desconhecido'}`);
         }
+        const result = await response.json();
+        alert(result.message);
+        document.getElementById('form-agendamento').reset();
+        // Resetar selects
+        document.getElementById('especialidade').value = '';
+        document.getElementById('profissional').innerHTML = '<option value="">Selecione um profissional</option>';
+        document.getElementById('data').innerHTML = '<option value="">Selecione uma data</option>';
     } catch (error) {
         console.error('Erro ao agendar:', error);
-        alert('Erro ao agendar');
+        alert(`Erro ao agendar: ${error.message}`);
     }
 }
 
@@ -167,12 +159,16 @@ async function pesquisarAgendamentos(event) {
     }
 
     try {
+        console.log(`Pesquisando agendamentos para CPF: ${cpf}`);
         const response = await fetch(`http://localhost:3001/agendamentos/${cpf}`);
+        if (!response.ok) {
+            throw new Error(`Erro HTTP: ${response.status} ${response.statusText}`);
+        }
         const agendamentos = await response.json();
         exibirAgendamentos(agendamentos);
     } catch (error) {
         console.error('Erro ao pesquisar agendamentos:', error);
-        alert('Erro ao pesquisar');
+        alert(`Erro ao pesquisar: ${error.message}`);
     }
 }
 
@@ -189,8 +185,6 @@ function exibirAgendamentos(agendamentos) {
         div.innerHTML = `
             <p><strong>Nome:</strong> ${ag.nome}</p>
             <p><strong>CPF:</strong> ${ag.cpf}</p>
-            <p><strong>Especialidade:</strong> ${ag.especialidade}</p>
-            <p><strong>Profissional:</strong> ${ag.profissionalNome}</p>
             <p><strong>Data:</strong> ${ag.data}</p>
             <button onclick="cancelarAgendamento(${ag.id})">Cancelar</button>
         `;
@@ -201,18 +195,19 @@ function exibirAgendamentos(agendamentos) {
 async function cancelarAgendamento(id) {
     if (!confirm('Deseja cancelar este agendamento?')) return;
     try {
+        console.log(`Cancelando agendamento ID: ${id}`);
         const response = await fetch(`http://localhost:3001/agendamentos/${id}`, {
             method: 'DELETE'
         });
-        const result = await response.json();
-        if (response.ok) {
-            alert(result.message);
-            document.getElementById('form-pesquisa').dispatchEvent(new Event('submit'));
-        } else {
-            alert(result.error);
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Erro HTTP: ${response.status} - ${errorData.error || 'Erro desconhecido'}`);
         }
+        const result = await response.json();
+        alert(result.message);
+        document.getElementById('form-pesquisa').dispatchEvent(new Event('submit'));
     } catch (error) {
         console.error('Erro ao cancelar agendamento:', error);
-        alert('Erro ao cancelar');
+        alert(`Erro ao cancelar: ${error.message}`);
     }
 }
