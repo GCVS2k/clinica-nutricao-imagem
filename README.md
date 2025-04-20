@@ -28,7 +28,7 @@ Este projeto é uma aplicação web para a **Clínica Nutrição e Imagem**, com
 
 ### 1. Clonar o Repositório
 ```bash
-git clone https://github.com/SEU_USUARIO/clinica-nutricao-imagem.git
+git clone https://github.com/GCVS2k/clinica-nutricao-imagem.git
 cd clinica-nutricao-imagem
 
 
