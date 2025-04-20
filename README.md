@@ -1,28 +1,70 @@
 # Clínica Nutrição e Imagem
 
-Este projeto é uma aplicação web para a **Clínica Nutrição e Imagem**, composta por uma landing page estática, uma API para consulta de disponibilidade de profissionais, e uma aplicação de agendamento de consultas/exames. O objetivo é permitir que usuários visualizem serviços, consultem a disponibilidade de profissionais e agendem consultas de forma prática.
+![GitHub repo size](https://img.shields.io/github/repo-size/GCVS2k/clinica-nutricao-imagem)
+![GitHub last commit](https://img.shields.io/github/last-commit/GCVS2k/clinica-nutricao-imagem)
+![License](https://img.shields.io/github/license/GCVS2k/clinica-nutricao-imagem)
 
-## Estrutura do Projeto
+Bem-vindo ao projeto **Clínica Nutrição e Imagem**, uma aplicação web que oferece uma landing page para promover serviços de saúde, uma API para consultar a disponibilidade de profissionais, e um sistema de agendamento de consultas e exames. O objetivo é proporcionar uma experiência prática para usuários visualizarem serviços, filtrarem profissionais por especialidade, e agendarem consultas com facilidade.
 
-- **Landing Page** (`index.html`, `styles.css`, `images/`): Página inicial com informações sobre serviços, equipe, disponibilidade e formulário de contato.
-- **API de Disponibilidade** (`api/`): API Node.js que consulta um arquivo JSON (`profissionais.json`) para listar especialidades e profissionais, com filtros por especialidade e nome.
-- **Aplicação de Agendamento** (`agendamento/`):
-  - **Frontend** (`agendamento/frontend/`): Interface para selecionar especialidade, profissional, data, e registrar agendamentos com nome e CPF.
-  - **Backend** (`agendamento/backend/`): API Node.js que gerencia agendamentos, armazenados em `agendamentos.json`, com funcionalidades de pesquisa e cancelamento por CPF.
+## Funcionalidades
+
+- **Landing Page**: Interface estática com informações sobre serviços, equipe, e filtro de disponibilidade por especialidade ou nome do profissional.
+- **Consulta de Disponibilidade**: API que lista especialidades e profissionais, com filtros dinâmicos.
+- **Agendamento de Consultas**: Interface para selecionar especialidade, profissional, data/horário, e registrar agendamentos com nome e CPF. Inclui pesquisa e cancelamento por CPF.
+- **Backend Robusto**: APIs RESTful para gerenciar dados de profissionais e agendamentos, armazenados em arquivos JSON.
 
 ## Tecnologias Utilizadas
 
-- **Frontend**: HTML, CSS, JavaScript
-- **Backend**: Node.js, Express
-- **Armazenamento**: Arquivos JSON (`profissionais.json`, `agendamentos.json`)
-- **Versionamento**: Git, GitHub
+- **Frontend**:
+  - HTML5: Estrutura das páginas.
+  - CSS3: Estilização responsiva e visual.
+  - JavaScript (ES6): Lógica de interação e requisições às APIs.
+- **Backend**:
+  - Node.js: Ambiente de execução.
+  - Express.js: Framework para APIs RESTful.
+  - File System (fs): Leitura/escrita em arquivos JSON.
+- **Armazenamento**:
+  - JSON: Arquivos `profissionais.json` e `agendamentos.json` como banco de dados.
+- **Ferramentas**:
+  - Visual Studio Code: Desenvolvimento e depuração.
+  - Git/GitHub: Controle de versão e hospedagem.
+  - Live Server/http-server: Servidor local para o frontend.
+  - Postman: Testes de API.
+  - CORS: Configuração para requisições cross-origin.
+- **Outros**:
+  - Markdown: Documentação no `README.md`.
+  - npm: Gerenciamento de dependências.
+
+## Estrutura do Projeto
+
+clinica-nutricao-imagem/
+├── index.html              # Landing page
+├── styles.css              # Estilos da landing page
+├── images/                 # Imagens da clínica
+├── api/
+│   ├── server.js           # API de disponibilidade
+│   ├── profissionais.json  # Dados dos profissionais
+│   └── package.json        # Dependências da API
+├── agendamento/
+│   ├── frontend/
+│   │   ├── index.html      # Página de agendamento
+│   │   ├── styles.css      # Estilos do agendamento
+│   │   └── script.js       # Lógica do frontend
+│   ├── backend/
+│   │   ├── server.js       # API de agendamento
+│   │   ├── profissionais.json  # Dados dos profissionais
+│   │   ├── agendamentos.json   # Dados dos agendamentos
+│   │   └── package.json    # Dependências do backend
+├── .gitignore              # Ignora node_modules
+└── README.md               # Documentação
 
 ## Pré-requisitos
 
-- [Node.js](https://nodejs.org/) (versão LTS recomendada)
-- Navegador web moderno (Chrome, Firefox, Edge)
-- [Git](https://git-scm.com/) (para clonar o repositório)
-- Um servidor HTTP local (ex.: Live Server no VSCode ou `http-server`)
+- **Node.js** (v16 ou superior, LTS recomendado): [Download](https://nodejs.org)
+- **Navegador moderno** (Chrome, Firefox, Edge)
+- **Git**: [Instalação](https://git-scm.com/downloads)
+- **Live Server** (extensão do VSCode) ou **http-server** (`npm install -g http-server`)
+- **Postman** (opcional, para testar APIs): [Download](https://www.postman.com/downloads/)
 
 ## Como Configurar e Executar
 
@@ -31,122 +73,95 @@ Este projeto é uma aplicação web para a **Clínica Nutrição e Imagem**, com
 git clone https://github.com/GCVS2k/clinica-nutricao-imagem.git
 cd clinica-nutricao-imagem
 
+2. Instalar Dependências
+Para a API de Disponibilidade:
+bash
 
-2. **Personalizar o `README.md`**:
-   - Substitua `SEU_USUARIO` pelo seu nome de usuário do GitHub.
-   - Substitua `SEU_NOME` e `SEU_EMAIL` pelas suas informações de contato, ou remova a seção de contato, se preferir.
-   - Adicione um arquivo `LICENSE` (ex.: MIT License) na raiz do projeto, se desejar:
-     ```text
-     MIT License
+cd api
+npm install
 
-     Copyright (c) 2025 [SEU_NOME]
+Para o Backend de Agendamento:
+bash
 
-     Permission is hereby granted, free of charge, to any person obtaining a copy
-     of this software and associated documentation files (the "Software"), to deal
-     in the Software without restriction, including without limitation the rights
-     to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-     copies of the Software, and to permit persons to whom the Software is
-     furnished to do so, subject to the following conditions:
+cd agendamento/backend
+npm install
 
-     The above copyright notice and this permission notice shall be included in all
-     copies or substantial portions of the Software.
+3. Iniciar os Servidores
+API de Disponibilidade (porta 3000):
+bash
 
-     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-     IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-     FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-     AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-     LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-     OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-     SOFTWARE.
-     ```
+cd api
+npm start
 
-3. **Adicionar e commit o `README.md`**:
-   - No terminal do VSCode:
-     ```bash
-     git add README.md
-     git commit -m "Adiciona README.md com instruções do projeto"
-     git push origin main
-     ```
+Acesse: http://localhost:3000/especialidades
 
----
+Backend de Agendamento (porta 3001):
+bash
 
-### Passo 5: Verificar o repositório no GitHub
-1. **Acesse o repositório**:
-   - Vá para `https://github.com/SEU_USUARIO/clinica-nutricao-imagem`.
-   - Confirme que todos os arquivos estão presentes, incluindo:
-     - `index.html`, `styles.css`, `images/`
-     - `api/` (com `server.js`, `profissionais.json`, `package.json`)
-     - `agendamento/` (com `frontend/` e `backend/`)
-     - `README.md`
+cd agendamento/backend
+npm start
 
-2. **Testar o `README.md`**:
-   - O GitHub renderizará o `README.md` automaticamente na página inicial do repositório.
-   - Verifique se as seções estão formatadas corretamente e se as instruções são claras.
+Acesse: http://localhost:3001/especialidades
 
-3. **Testar a clonagem**:
-   - Em outra pasta, clone o repositório para simular um usuário externo:
-     ```bash
-     git clone https://github.com/SEU_USUARIO/clinica-nutricao-imagem.git
-     cd clinica-nutricao-imagem
-     ```
-   - Siga as instruções do `README.md` para configurar e executar:
-     - Instale dependências em `api/` e `agendamento/backend/`.
-     - Inicie os servidores.
-     - Abra as páginas com Live Server ou `http-server`.
-   - Se encontrar problemas, ajuste o `README.md` ou os arquivos do projeto.
+4. Abrir a Aplicação
+Landing Page:
+Abra index.html com Live Server (VSCode) ou:
+bash
 
----
+cd clinica-nutricao-imagem
+http-server
 
-### Passo 6: Dicas adicionais
-1. **Organizar branches**:
-   - Para futuras alterações, crie branches separadas:
-     ```bash
-     git checkout -b feature/nova-funcionalidade
-     git push origin feature/nova-funcionalidade
-     ```
-   - Mescle as alterações na branch `main` via Pull Request no GitHub.
+Acesse: http://localhost:8080
 
-2. **Adicionar imagens reais**:
-   - Substitua as imagens em `images/` por versões reais da clínica. Atualize o repositório:
-     ```bash
-     git add images/
-     git commit -m "Atualiza imagens da clínica"
-     git push origin main
-     ```
+Página de Agendamento:
+Abra agendamento/frontend/index.html com Live Server ou:
+Acesse: http://localhost:8080/agendamento/frontend/
 
-3. **Melhorar o `README.md`**:
-   - Adicione capturas de tela do projeto:
-     ```markdown
-     ## Screenshots
-     ![Landing Page](screenshots/landing-page.png)
-     ![Agendamento](screenshots/agendamento.png)
-     ```
-     - Crie uma pasta `screenshots/` e adicione as imagens.
-   - Inclua badges do GitHub:
-     ```markdown
-     ![GitHub repo size](https://img.shields.io/github/repo-size/SEU_USUARIO/clinica-nutricao-imagem)
-     ![GitHub last commit](https://img.shields.io/github/last-commit/SEU_USUARIO/clinica-nutricao-imagem)
-     ```
+5. Testar as APIs (com Postman)
+API de Disponibilidade:
+GET http://localhost:3000/especialidades: Lista especialidades.
 
-4. **Hospedagem**:
-   - **Frontend**: Hospede a landing page e a página de agendamento no Netlify ou GitHub Pages.
-   - **Backend**: Hospede as APIs no Heroku ou Render. Atualize o `README.md` com as URLs públicas, se aplicável.
+GET http://localhost:3000/profissionais/especialidade/Nutrologia: Filtra profissionais.
 
-5. **Segurança**:
-   - Evite incluir informações sensíveis (ex.: chaves de API, senhas) no repositório.
-   - Certifique-se de que `agendamentos.json` não contém dados reais de usuários.
+Backend de Agendamento:
+POST http://localhost:3001/agendamentos: Cria um agendamento (exemplo de corpo):
+json
 
----
+{
+    "profissionalId": 2,
+    "data": "2025-04-21 09:00",
+    "nome": "João da Silva",
+    "cpf": "123.456.789-00"
+}
 
-### Resultado
-- O projeto foi incluído em um repositório público no GitHub, com todos os artefatos necessários (`index.html`, `styles.css`, `api/`, `agendamento/`, `images/`).
-- Um arquivo `.gitignore` foi criado para excluir `node_modules`.
-- Um `README.md` detalhado foi adicionado, explicando o projeto, como configurá-lo e executá-lo.
-- O repositório está organizado e pronto para ser clonado e executado por outros usuários.
+GET http://localhost:3001/agendamentos/123.456.789-00: Pesquisa agendamentos por CPF.
 
-Se precisar de ajuda para:
-- Criar o repositório no GitHub (caso tenha dúvidas com a interface).
-- Ajustar o `README.md` (ex.: adicionar screenshots, mudar o texto).
-- Configurar hospedagem (Netlify, Heroku).
-- Resolver erros no Git/GitHub (ex.: problemas de autenticação).
-...é só me avisar! Também posso fornecer o link do repositório, se quiser que eu revise algo específico após o upload.
+Screenshots
+Landing Page
+
+Agendamento
+
+Landing Page
+
+Agendamento
+
+Contribuição
+Faça um fork do repositório.
+
+Crie um branch para sua feature: git checkout -b minha-feature.
+
+Commit suas alterações: git commit -m "Adiciona minha feature".
+
+Push para o branch: git push origin minha-feature.
+
+Abra um Pull Request no GitHub.
+
+Licença
+
+Contato
+Autor: Guilherme cally
+
+GitHub: GCVS2k
+
+Email: guilhermecally@hotmail.com
+
